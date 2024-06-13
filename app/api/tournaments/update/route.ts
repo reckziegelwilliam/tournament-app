@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     where: { id: userId }
   });
 
-  if (!user || user.role !== 'admin') {
+  if (!user || user.role !== ADMIN) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
   }
 
