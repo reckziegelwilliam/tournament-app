@@ -17,6 +17,9 @@ model User {
   name        String
   email       String       @unique
   password    String
+  bio         String?
+  location    String?
+  avatarUrl   String?
   role       Role      @default(USER) // Use the enum here
   createdTournaments Tournament[] @relation("UserTournaments")
   participatedTournaments Tournament[] @relation("ParticipantTournaments")

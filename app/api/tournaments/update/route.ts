@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { Role } from '@/types/user';
 
 export async function POST(request: Request) {
   const { tournamentId, title, userId } = await request.json();
@@ -8,7 +9,7 @@ export async function POST(request: Request) {
     where: { id: userId }
   });
 
-  if (!user || user.role !== ADMIN) {
+  if (!user || user.role !== 'ADMIN') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
   }
 
