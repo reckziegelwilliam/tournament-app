@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgres://default:daA6ZVhoOz1q@ep-shiny-queen-a4c6vnga-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id          Int          @id @default(autoincrement())
+  name        String
+  email       String       @unique
+  password    String
+  role       Role      @default(USER) // Use the enum here
+  createdTournaments Tournament[] @relation("UserTournaments")
+  participatedTournaments Tournament[] @relation("ParticipantTournaments")
+}
+
+model Tournament {
+  id          Int       @id @default(autoincrement())
+  title       String
+  createdBy   Int
+  creator     User      @relation("UserTournaments", fields: [createdBy], references: [id])
+  participants User[]   @relation("ParticipantTournaments")
+}
